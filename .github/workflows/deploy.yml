@@ -1,4 +1,4 @@
-name: Deploy Expense Tracker to EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Website
     runs-on: ubuntu-latest
 
     steps:
@@ -16,43 +15,13 @@ jobs:
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.2
-
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          timeout: 60s
-          command_timeout: 15m
-
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
           script: |
-            echo "========== Deploy Started =========="
-
-            # Create directory if it doesn't exist
-            sudo mkdir -p /var/www/expense-tracker
-
-            # Change ownership
-            sudo chown -R $USER:$USER /var/www/expense-tracker
-
-            # Go to project folder
-            cd /var/www/expense-tracker
-
-            # If not cloned already, clone the repository
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }} .
-            fi
-
-            # Get latest code
+            cd /var/www/FinTrack---The-Expense-Tracker
             git fetch origin main
             git reset --hard origin/main
-
-            # Fix permissions
-            sudo chmod -R 755 /var/www/expense-tracker
-
-            # Reload Nginx
-            sudo systemctl reload nginx
-
-            echo "========== Deployment Successful =========="
-
-            echo "Current Commit:"
-            git rev-parse --short HEAD
+            sudo systemctl restart nginx
