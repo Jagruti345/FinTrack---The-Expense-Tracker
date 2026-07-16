@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinTrack — Expense Tracker</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="mesh"></div>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="logo"><span class="logo-mark"><i class="fa-solid fa-wave-square"></i></span>FinTrack</div>
+  <div class="header-right">
+    <div class="conn-status" id="connStatus"><span class="pip"></span>Live</div>
+    <button id="exportBtn"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow"><span class="eyebrow-dot"></span>LIVE SPEND MONITOR</p>
+    <h1>Feel the <span class="accent-FinTrack">FinTrack</span><br/>of your spending.</h1>
+    <p class="hero-sub">Every rupee, read the moment it moves. FinTrack tracks your spending like a vital sign — steady, visible, impossible to ignore.</p>
+    <div class="hero-actions">
+      <a href="#addExpense" class="primary-btn hero-btn"><i class="fa-solid fa-circle-plus"></i> Log an expense</a>
+      <a href="#allExpenses" class="ghost-btn">View activity <i class="fa-solid fa-arrow-down"></i></a>
+    </div>
+  </div>
+
+  <div class="FinTrack-strip" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="FinTrack-svg">
+      <path class="FinTrack-path" d="M0,60 L130,60 L155,60 L172,18 L192,104 L212,34 L232,60 L410,60 L432,60 L452,22 L472,98 L492,60 L670,60 L692,60 L710,30 L730,90 L750,60 L1200,60" />
+    </svg>
+  </div>
+</section>
+
+<!-- ================= MAIN ================= -->
+<main class="container">
+
+  <!-- ================= LEFT: ADD EXPENSE ================= -->
+  <section class="left-panel" id="addExpense">
+    <div class="card form-card">
+      <h2><span class="ic-wrap"><i class="fa-solid fa-plus"></i></span>Add Expense</h2>
+
+      <form id="expenseForm">
+        <div class="input-group">
+          <label>Title</label>
+          <input type="text" id="title" placeholder="e.g. Grocery run" required>
+        </div>
+
+        <div class="input-group">
+          <label>Category</label>
+          <select id="category" required>
+            <option value="">Choose category</option>
+            <option>Food</option>
+            <option>Travel</option>
+            <option>Shopping</option>
+            <option>Bills</option>
+            <option>Health</option>
+            <option>Education</option>
+            <option>Entertainment</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Amount (₹)</label>
+          <div class="amount-wrap">
+            <span class="amt-prefix">₹</span>
+            <input type="number" id="amount" placeholder="0.00" step="0.01" min="0" required>
+          </div>
+        </div>
+
+        <button type="submit" class="primary-btn">
+          <i class="fa-solid fa-circle-plus"></i> Add Expense
+        </button>
+      </form>
+    </div>
+
+    <div class="card tip-card">
+      <i class="fa-solid fa-lightbulb"></i>
+      <p>Expenses sync instantly across the dashboard — totals, top spend, and category breakdown all update the moment you add or remove one.</p>
+    </div>
+  </section>
+
+  <!-- ================= RIGHT: STATS ================= -->
+  <section class="right-panel">
+
+    <div class="stats-grid">
+      <div class="stat-card total-card">
+        <div class="stat-top">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          <span class="stat-label">Total Spending</span>
+        </div>
+        <h1 id="totalAmount">₹0</h1>
+        <div class="stat-sub" id="totalCount">0 expenses</div>
+      </div>
+
+      <div class="stat-card expensive-card">
+        <div class="stat-top">
+          <i class="fa-solid fa-crown"></i>
+          <span class="stat-label">Top Expense</span>
+        </div>
+        <h4 id="expensiveTitle">—</h4>
+        <p id="expensiveAmount">₹0</p>
+      </div>
+    </div>
+
+    <div class="card report-card">
+      <h2><span class="ic-wrap"><i class="fa-solid fa-chart-pie"></i></span>Category Breakdown</h2>
+      <div id="categoryList" class="category-list">
+        <p class="empty-text">No category data yet</p>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ================= EXPENSE TABLE ================= -->
+<section class="table-section" id="allExpenses">
+  <div class="table-header">
+    <h2><span class="ic-wrap"><i class="fa-solid fa-list"></i></span>All Expenses</h2>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search by title, category, or amount…">
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="expenseTable">
+        <tr><td colspan="5" class="no-data"><i class="fa-solid fa-receipt"></i>No expenses yet</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= LOADER ================= -->
+<div id="loader" class="loader-container">
+  <div class="loader"></div>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div id="toast" class="toast"></div>
+
+<!-- ================= FOOTER ================= -->
+<footer>FinTrack · Expense Tracker — AWS Lambda · API Gateway · DynamoDB · S3</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
