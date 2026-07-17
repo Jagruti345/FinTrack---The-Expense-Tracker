@@ -288,15 +288,39 @@ Live Website
 
 # 📸 Screenshots
 
-Add screenshots here.
+## 🏠 Home Page
 
-Example:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9b3f449c-e723-40fd-9e6f-0480216b33d7" alt="Expense Tracker Home Page" width="900">
 
-```
-images/homepage.png
-images/dashboard.png
-images/mobile.png
-```
+</p>
+
+---
+
+## 💰 Add Income & Expense
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/040135d8-00c6-44e6-a212-3ffc4dee66a6" alt="Add Transaction" width="900">
+
+</p>
+
+---
+
+## 📝 Transaction History
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cb9889db-9b7d-4a68-a053-e9ddc76888fd" alt="Transaction History" width="900">
+
+</p>
+
+---
+
+## 📱 Mobile View
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3fca5e36-fbc4-42d3-a8ce-1f0abf66229b" alt="Mobile Responsive View" width="350">
+
+</p>
 
 ---
 
